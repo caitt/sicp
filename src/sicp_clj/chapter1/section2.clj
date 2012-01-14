@@ -1,7 +1,7 @@
 (ns sicp_clj.chapter1.section2
   )
 
-;; ex 11.1
+;; ex 1.11
 ;; Write a fuction that computes f (recursively and iteratively)
 ;; f(n) = n for n < 3
 ;; f(n) = f(n-1) + 2f(n-2) + 3f(n-3) for n >= 3
