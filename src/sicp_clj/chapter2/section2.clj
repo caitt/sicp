@@ -319,3 +319,38 @@
 (defn triples [n s]
   (for [i (range 1 (inc n)) j (range 1 i) k (range 1 j) :when (= (+ i j k) s)]
     [i j k]))
+
+;; ex 2.42
+(def safe-position?)
+(def adjoin-position)
+(def empty-board)
+
+;; redefine above symbols so queens solves n-queens problem
+(defn queens [board-size]
+  ((fn queen-cols [ k ]   
+     (if (= k 0)
+       (list empty-board)
+       (filter
+        #(safe-position? k %)
+        (mapcat
+         (fn [rest-of-queens]
+           (map
+            #(adjoin-position % k rest-of-queens)
+            (range board-size)))
+         (queen-cols (- k 1))))))
+   board-size))
+
+;; task : implement functions above
+(def empty-board '())
+
+(defn adjoin-position [idx _ position]
+  (cons idx position))
+
+(defn safe-position? [_ [t & position]]
+  (let [a (repeat t)
+        b (iterate inc t)
+        c (iterate dec t)
+        rays (map rest [a b c])]
+    (not-any? boolean (mapcat #(map = % position) rays))))
+
+    
